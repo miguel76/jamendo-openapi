@@ -1,0 +1,26 @@
+{
+  "name": "jamendo-openapi",
+  "version": "0.1.0",
+  "description": "An OpenAPI description of Jamendo API (https://devportal.jamendo.com/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguel76/jamendo-openapi.git"
+  },
+  "author": "miguel.ceriani@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miguel76/jamendo-openapi/issues"
+  },
+  "homepage": "https://github.com/miguel76/jamendo-openapi#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "async": "^2.5.0",
+    "libxslt": "^0.6.5",
+    "lodash": "^4.17.4",
+    "request": "^2.81.0"
+  }
+}
