@@ -1,0 +1,652 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This API allows developers to interact with data on the Jamendo platform, like music tracks and albums, authors, users, playlists, and licenses.",
+    "version": "3.0.0",
+    "title": "Jamendo",
+    "termsOfService": "https://devportal.jamendo.com/api_terms_of_use",
+    "contact": {
+      "email": "contact@jamendo.com"
+    }
+  },
+  "host": "api.jamendo.com",
+  "basePath": "/v3.0",
+  "tags": [
+    {
+      "name": "tracks",
+      "description": "Track is the king entity in Jamendo",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/tracks": {
+      "get": {
+        "tags": [
+          "tracks"
+        ],
+        "summary": "Search for tracks or retrieve details of specific tracks",
+        "description": "",
+        "operationId": "searchTracks",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "format",
+            "description": "The results formatting type",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "xml",
+              "json",
+              "jsonpretty"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "callback",
+            "description": "Use this parameter to have the response json wrapped in a callback function (jsonp technique). Such feature is enable only for json format and GET requests; if used in combination with other formats or a not-get request, the callback parameter is simply ignored and a warning is raised",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "The position to start returning results from",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "The max number of results to return. Default is 10 and Max is 200. Using the keyword 'all' still a max of 200 rows will be returned",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "description": "Sort results by the queried field(s).  You can specify whether to follow an ascending or descending order adding the suffix _asc or _desc to every field (order=field_asc). Asc is the default one. All rating orders (such as \"popularity_total\") follow a more specific norm: they use \"desc\" as default and will forcedly use \"desc\" even if you requested an \"asc\". If you are using the tracks api for searching, be careful because declaring an order different than \"relevance\" as first order, you would entirely loose the search relevance order. If you want a particular rate to influence the order, probably \"boost\" is what you are looking for. Relevance is the default order.\n",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "enum": [
+                "relevance",
+                "buzzrate",
+                "downloads_week",
+                "downloads_month",
+                "downloads_total",
+                "listens_week",
+                "listens_month",
+                "listens_total",
+                "popularity_week",
+                "popularity_month",
+                "popularity_total",
+                "name",
+                "album_name",
+                "artist_name",
+                "releasedate",
+                "duration",
+                "id"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "description": "One or more track id",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "A track name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "namesearch",
+            "description": "Search a track by name (track_name matching *seachquery*). You must provide an UTF-8 string",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "Select only tracks of a certain type. By default we return only albumtracks to avoid the high risk of bugging applications (especially those built before 2015, that is before the existence of singles). Using 'type=single albumtrack' you will select both types\n",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "enum": [
+                "single",
+                "albumtrack"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "album_id",
+            "description": "An album Id",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "album_name",
+            "description": "Album name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "artist_id",
+            "description": "Artist id",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "artist_name",
+            "description": "Artist name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "datebetween",
+            "description": "Released between dates. This parameter need a value to be used for a between closed interval. The \"from\" and \"to\" parts are both mandatory, must be separated by an underscore (\"_\"), and must be both in the yyyy-mm-dd format\"\n",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "featured",
+            "description": "Is this a featured track (selected by Jamendo team)",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              true,
+              1
+            ]
+          },
+          {
+            "in": "query",
+            "name": "imagesize",
+            "description": "The cover size in pixel (if not specified, a default one will be returned)",
+            "required": false,
+            "type": "integer",
+            "enum": [
+              25,
+              35,
+              50,
+              55,
+              60,
+              65,
+              70,
+              75,
+              85,
+              100,
+              130,
+              150,
+              200,
+              300,
+              400,
+              500,
+              600
+            ]
+          },
+          {
+            "in": "query",
+            "name": "audioformat",
+            "description": "The audio format you wish to get in the 'audio' returned field: mp31 (96kbs), mp32 (VBR, good quality), ogg and flac are the available formats. If no 'audioformat' is declared, mp31 will be used by default.",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "mp31",
+              "mp32",
+              "ogg",
+              "flac"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "audiodlformat",
+            "description": "The audio download format you wish to get in the 'audiodownload' returned field: mp31 (96kbs), mp32 (VBR, good quality), ogg and flac are the available formats. If no 'audiodlformat' is declared, the value given to 'audioformat' will be used as default, and if neither 'audioformat' is declared, 'mp32' will be the default",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "mp31",
+              "mp32",
+              "ogg",
+              "flac"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "tags",
+            "description": "Search by one or more tags (genre, instrument, theme and nc tags). We interpret this request as boolean, that is [rock+pop] is translated as [rock AND pop].  By default tracks are returned by relevance order (a song can be 'more rock than one other'); be careful to not overwrite such relevance order with another one (see 'order' and 'boost' params).  We support some synonymy, language mapping and hierarchy on most popular tags (ex chitarra=guitar=guitars), but we strongly suggest using english when possible.\n",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fuzzytags",
+            "description": "Search by one or more tags (genre, instrument, theme and nc tags). We interpret this request as fuzzy, that is [rock+pop] is translated as [rock OR pop], although what is [pop AND rock] will be returned before what is [rock OR pop] (unless you declare another order parameter). We support some sinomity, language mapping and hierarchy on most popular tags (ex chitarra=guitar=guitars), but we strongly suggest using english when possible.\n",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "acousticelectric",
+            "description": "Is this track acoustic or electric",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "acoustic",
+              "electric"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "vocalinstrumental",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "vocal",
+              "instrumental"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "description": "The gender of the singer (if the track is vocal of course)",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "speed",
+            "description": "",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "enum": [
+                "verylow",
+                "low",
+                "medium",
+                "high",
+                "veryhigh"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "lang",
+            "description": "The lyrics language (we accept the standard 2 letters format, like \"en\", \"fr\", \"it\", etc)\n",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "durationbetween",
+            "description": "Track duration between values (seconds). This parameter need a value to be used for a between closed interval. The \"from\" and \"to\" parts are both mandatory, must be separated by an underscore (\"_\"), and must be both integer\n",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "xartist",
+            "description": "Select tracks most similar to the declared NON-Jamendo artist (madonna)\n",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "description": "A free text search that operates considering track, album and artist name as well as tags (genres, instruments, ...) and similar artists\n",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "prolicensing",
+            "description": "Filter to get only tracks subscribed to our single track licensing commercial program",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              true,
+              1
+            ]
+          },
+          {
+            "in": "query",
+            "name": "probackground",
+            "description": "Filter to get only tracks subscribed to our background music commercial program",
+            "required": false,
+            "type": "boolean",
+            "enum": [
+              true,
+              1
+            ]
+          },
+          {
+            "in": "query",
+            "name": "ccsa",
+            "description": "Creative Commons Share Alike. Explicit this paramenter if you need to enforce some strict conditions on the type of license. For possible combinations with other types of licence check Creative Commons licenses",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "ccnd",
+            "description": "Creative Commons No Derivs. Explicit this paramenter if you need to enforce some strict conditions on the type of license. For possible combinations with other types of licence check Creative Commons licenses",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "ccnc",
+            "description": "Creative Commons Non Commercial. Explicit this paramenter if you need to enforce some strict conditions on the type of license. For possible combinations with other types of licence check Creative Commons licenses",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "include",
+            "description": "With this special parameter you can append to the results some additional fields, not returned by default.",
+            "required": false,
+            "type": "array",
+            "collectionFormat": "ssv",
+            "items": {
+              "enum": [
+                "licenses",
+                "musicinfo",
+                "stats",
+                "lyrics"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "groupby",
+            "description": "With this parameter you can aggregate results, grouping by artist or by album. If you add groupby=artist_id to your get request, just one track per artist will be returned; such track is the first one that would be find on the results list if not grouping. We strongly suggest to enable such feature when using the order parameter for charts, as many duplicate artist/album may appear otherwise",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "artist_id",
+              "album_id"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "boost",
+            "description": "When you are searching tracks, for instance with 'tags=rock+pop', and at the same time you want to bring the best tracks of the week in advance, you should absolutely use this parameter instead of 'order'. Using 'order' you would indeed fully loose the concept of search relevance: the api would return something which is not so much relevant for rock+pop, but rather very popular this week. At the moment, we are boosting with 'popularity_month' by default, but with a lower intensity than what you would get explicitly asking for boost=popularity_month\n",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "buzzrate",
+              "downloads_week",
+              "downloads_month",
+              "downloads_total",
+              "listens_week",
+              "listens_month",
+              "listens_total",
+              "popularity_week",
+              "popularity_month",
+              "popularity_total"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "results of the query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "headers": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "default": "success",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "default": 0,
+                      "example": 0
+                    },
+                    "error_message": {
+                      "type": "string",
+                      "default": "",
+                      "example": ""
+                    },
+                    "warning": {
+                      "type": "string",
+                      "default": "",
+                      "example": ""
+                    },
+                    "results_count": {
+                      "type": "integer",
+                      "example": 2
+                    }
+                  }
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TrackInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "apikey_auth": []
+          }
+        ]
+      }
+    },
+    "/tracks/file": {
+      "get": {
+        "tags": [
+          "tracks"
+        ],
+        "summary": "Download an audio file of a track",
+        "description": "The 'file' method represent an exception to the norm. Instead of returning a document object, here we http-redirect to the requested file url, in order to let your application download a certain resource. Note that here we don't inherit parent params declarations as usual, and that a not valid request will trigger an http error (404 or 500)",
+        "operationId": "getTrackFile",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "audioformat",
+            "description": "The audio format you wish to get in the 'audio' returned field: mp31 (96kbs), mp32 (VBR, good quality), ogg and flac are the available formats. If no 'audioformat' is declared, mp31 will be used by default.",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "mp31",
+              "mp32",
+              "ogg",
+              "flac"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "action",
+            "description": "Help our server to optimize this request handling depending on the whether the action is stream or download. The default is dowload.",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "download",
+              "stream"
+            ]
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "description": "Applying a redirection this method accepts and needs only one track id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "results of the query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "headers": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "default": "success",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "default": 0,
+                      "example": 0
+                    },
+                    "error_message": {
+                      "type": "string",
+                      "default": "",
+                      "example": ""
+                    },
+                    "warning": {
+                      "type": "string",
+                      "default": "",
+                      "example": ""
+                    },
+                    "results_count": {
+                      "type": "integer",
+                      "example": 2
+                    }
+                  }
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/TrackInfo"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "apikey_auth": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "apikey_auth": {
+      "type": "apiKey",
+      "name": "client_id",
+      "in": "query"
+    },
+    "oauth2_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://api.jamendo.com/v3.0/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "music": "read/write your Jamendo data"
+      }
+    }
+  },
+  "definitions": {
+    "TrackInfo": {
+      "type": "object",
+      "properties": {
+        "client_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "petId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "shipDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "Order Status",
+          "enum": [
+            "placed",
+            "approved",
+            "delivered"
+          ]
+        },
+        "complete": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "xml": {
+        "name": "TrackSearchParams"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Jamendo API",
+    "url": "https://developer.jamendo.com/v3.0/docs"
+  }
+}
