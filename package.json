@@ -2,7 +2,7 @@
   "name": "jamendo-openapi",
   "version": "1.0.0",
   "description": "An OpenAPI description of Jamendo API (https://devportal.jamendo.com/)",
-  "main": "distr.js",
+  "main": "jamendo.json",
   "dependencies": {
     "libxslt": "^0.6.5",
     "async": "^2.5.0",
