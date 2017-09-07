@@ -41,14 +41,13 @@ npm install swagger-client
 Use it (a valid API key is needed for API calls):
 ``` js
 Swagger = require('swagger-client');
-jamendoSpec = require('jamendo-openapi');
 
 Swagger(require('jamendo-openapi'))
-  .then( client => {
+  .then(client => {
     client.execute({
       securities: {authorized: {apikey_auth: '709fa152'}},
       operationId: 'searchTracks',
-      parameters: {search: 'punk'}).then(...);
+      parameters: {search: 'punk'}}).then(...);
    });
 ```
 
