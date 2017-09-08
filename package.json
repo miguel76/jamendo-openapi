@@ -1,6 +1,6 @@
 {
   "name": "jamendo-openapi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An OpenAPI description of Jamendo API (https://devportal.jamendo.com/)",
   "main": "index.js",
   "dependencies": {},
